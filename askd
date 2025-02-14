@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Surprise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Pacifico');
+        body {
+            font-family: 'Pacifico';
+            font-weight: 100; /* Tüm sayfanın fontunu normal kalınlıkta yapar */
+            overflow: hidden;
+            color: #fff;
+        }
+        .bgoverlay {
+            background: #673ab7;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            position: relative;
+            width: 400px;
+        }
+        .ico {
+            display: block;
+            width: 400px;
+            height: 400px;
+            position: relative;
+            text-align: center;
+        }
+        .ico:before {
+            content: "\f004";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 300px; /* Kalp başlangıçta daha büyük */
+            color: #ff4081;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .open .ico {
+            animation: open 4s;
+            transform: scale(4); /* Büyütme faktörü biraz küçültüldü */
+        }
+        .ico .title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 4;
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+        }
+        .open .ico .title {
+            opacity: 0;
+            transition: all 0.3s ease;
+            top: -100px;
+        }
+        .endtext {
+            opacity: 0;
+            position: absolute;
+            top: -100px;
+            width: 100%;
+            text-align: center;
+        }
+        .open .endtext {
+            top: 0;
+            opacity: 1;
+            animation: show 5s;
+        }
+        .endtext h1 {
+            font-size: 50px;
+        }
+        .endtext h2 {
+            font-size: 30px;
+        }
+        .endtext h3 {
+            font-size: 20px;
+        }
+        .endtext .close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+        }
+        @keyframes open {
+            from { transform: scale(1); }
+            to { transform: scale(4); }
+        }
+        @keyframes show {
+            from { opacity: 0; top: -100px; }
+            to { opacity: 1; top: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bgoverlay">
+        <div class="container">
+            <span class="ico">
+                <span class="title">Bas bana aşkım!</span>
+            </span>
+            <div class="endtext">
+                <span class="close" title="Restart">&times;</span>
+                <h1>Seni çok seviyorum</h1>
+                <h2>Seninle her an güzel, birlikte bir şeyler deneyimlemek ise ayrı güzel...</h2>
+                <h3><a href="https://www.airbnb.com/experiences/4831570?reservationId=16279267&shareCode=TARRWC9Q" target="_blank">Sürpriz :)</a></h3>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.title').click(function(){
+                $('.container').addClass('open');
+            });
+            $('.close').click(function(){
+                $('.container').removeClass('open');
+            });
+        });
+    </script>
+</body>
+</html>
