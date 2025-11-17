@@ -4,49 +4,150 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gaffari’nin İçsel Rehberi</title>
+
 <style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#fefefe; color:#333;}
-  .container { max-width:800px; margin:30px auto; padding:20px;}
-  h1 { text-align:center; font-size:2em; margin-bottom:5px;}
-  h2 { text-align:center; font-weight:normal; margin-bottom:20px; color:#555;}
-  .question-box, .notes-box { margin-bottom:20px; }
-  textarea { width:100%; min-height:80px; padding:10px; font-size:1em; }
-  button { padding:8px 15px; margin-top:5px; margin-right:5px; cursor:pointer; }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px; }
-  .grid div { padding:15px; border-radius:8px; text-align:center; font-weight:bold; cursor:pointer; }
-  .urgent-important { background:#ffcccc; }
-  .not-urgent-important { background:#ffe0b3; }
-  .urgent-not-important { background:#cce5ff; }
-  .not-urgent-not-important { background:#e0e0e0; }
-  .bottom-msg { text-align:center; margin-top:40px; color:#777;}
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#fafafa; color:#333;}
+
+  .container { max-width:900px; margin:30px auto; background:white; padding:30px;
+    box-shadow:0 0 15px rgba(0,0,0,0.1); border-radius:10px;}
+
+  h1 { text-align:center; margin-bottom:5px; }
+  h2 { text-align:center; font-weight:normal; margin-bottom:20px; color:#666; }
+
+  textarea { width:100%; min-height:90px; padding:10px; resize:vertical; font-size:14px;
+    border:1px solid #ccc; border-radius:6px; }
+
+  button { padding:8px 15px; margin-top:5px; cursor:pointer; }
+
+  /* MATRİS */
+  .matrix-wrapper {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 10px;
+    margin-top:40px;
+  }
+
+  /* Sol eksen */
+  .y-axis {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    text-align:center;
+    font-weight:bold;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size:18px;
+    color:#444;
+  }
+
+  /* Ana grid */
+  .matrix-grid {
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 40px repeat(2, 200px);
+    gap:10px;
+  }
+
+  /* Üst yatay eksen */
+  .x-axis {
+    grid-column: 1 / 3;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+    color:#444;
+  }
+
+  /* Hücre */
+  .cell {
+    padding:15px;
+    border-radius:10px;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .cell-title {
+    font-weight:bold;
+    margin-bottom:5px;
+    font-size:18px;
+  }
+
+  .cell-desc { font-size:14px; margin-bottom:10px; color:#333; }
+
+  /* Renkler görsele uygun */
+  .green  { background:#d3f2ce; }
+  .blue   { background:#cce7f7; }
+  .orange { background:#ffe4be; }
+  .red    { background:#f7c8c8; }
+
+  .bottom-msg { text-align:center; margin-top:40px; color:#777; font-size:14px; }
 </style>
 </head>
+
 <body>
 <div class="container">
+
   <h1>Gaffari’nin İçsel Rehberi</h1>
   <h2>Günlük düşünceler ve öncelikler</h2>
 
   <!-- Felsefi Soru -->
   <div class="question-box">
-    <p id="question">Yükleniyor...</p>
+    <p id="question" style="font-size:18px; font-weight:bold;">Yükleniyor...</p>
     <button onclick="newQuestion()">Başka Soru</button>
   </div>
 
   <!-- Notlar -->
-  <div class="notes-box">
+  <div class="notes-box" style="margin-top:20px;">
     <textarea id="note" placeholder="Düşüncelerinizi buraya yazın..."></textarea>
     <button onclick="saveNote()">Kaydet</button>
     <button onclick="downloadCSV()">Excel Olarak İndir</button>
   </div>
 
-  <!-- Eisenhower Grid -->
-  <h2>Eylem Pusulası (Eisenhower)</h2>
-  <div class="grid">
-    <div class="urgent-important" onclick="addTask('Önemli & Acil')">Önemli & Acil</div>
-    <div class="not-urgent-important" onclick="addTask('Önemli Ama Acil Değil')">Önemli Ama Acil Değil</div>
-    <div class="urgent-not-important" onclick="addTask('Acil Ama Önemli Değil')">Acil Ama Önemli Değil</div>
-    <div class="not-urgent-not-important" onclick="addTask('Önemli Değil & Acil Değil')">Önemli Değil & Acil Değil</div>
+  <!-- EISENHOWER MATRISİ -->
+  <h2>Eisenhower Matrisi</h2>
+
+  <div class="matrix-wrapper">
+    <div class="y-axis">
+      <div>ÖNEMLİ</div>
+      <div>ÖNEMLİ DEĞİL</div>
+    </div>
+
+    <div class="matrix-grid">
+
+      <!-- Yatay eksen -->
+      <div class="x-axis">
+        <div>ACİL</div>
+        <div>ACİL DEĞİL</div>
+      </div>
+
+      <!-- Hücreler -->
+      <div class="cell green">
+        <div class="cell-title">YAP</div>
+        <div class="cell-desc">Hemen şimdi yap.</div>
+        <textarea id="task_do" placeholder="Görevlerini buraya yaz..."></textarea>
+      </div>
+
+      <div class="cell blue">
+        <div class="cell-title">PLANLA</div>
+        <div class="cell-desc">Daha sonra yapmak için zaman belirle.</div>
+        <textarea id="task_plan" placeholder="Görevlerini buraya yaz..."></textarea>
+      </div>
+
+      <div class="cell orange">
+        <div class="cell-title">DEVRET</div>
+        <div class="cell-desc">Otomasyona al ya da başkasına devret.</div>
+        <textarea id="task_delegate" placeholder="Görevlerini buraya yaz..."></textarea>
+      </div>
+
+      <div class="cell red">
+        <div class="cell-title">ELE</div>
+        <div class="cell-desc">Bu işi sil ve yapma.</div>
+        <textarea id="task_delete" placeholder="Görevlerini buraya yaz..."></textarea>
+      </div>
+
+    </div>
   </div>
+
 </div>
 
 <div class="bottom-msg">
@@ -54,13 +155,13 @@
 </div>
 
 <script>
-// Felsefi sorular
+/* Sorular */
 const questions = [
   "Bugün hangisi seni gerçekten ileri taşır?",
   "Hangi sorumluluktan kaçıyorsun ve neden?",
   "Hayatında gerçekten önemli olan nedir?",
   "Bugün kendin için küçük bir adım atabilir misin?",
-  "Hangi kararın seni uzun vadede mutlu edeceğini düşünüyorsun?"
+  "Hangi kararın seni uzun vadede mutlu eder?"
 ];
 
 function newQuestion() {
@@ -68,43 +169,44 @@ function newQuestion() {
   document.getElementById('question').innerText = q;
 }
 
-// LocalStorage kaydetme
+/* Not kaydetme */
 function saveNote() {
-  const text = document.getElementById('note').value;
+  const note = document.getElementById('note').value;
+  const question = document.getElementById('question').innerText;
   const date = new Date().toLocaleString();
-  const savedNotes = JSON.parse(localStorage.getItem('notes') || '[]');
-  savedNotes.push({date, question: document.getElementById('question').innerText, answer: text});
-  localStorage.setItem('notes', JSON.stringify(savedNotes));
-  alert('Not kaydedildi!');
+
+  const data = {
+    date,
+    question,
+    note,
+    do:      document.getElementById('task_do').value,
+    plan:    document.getElementById('task_plan').value,
+    delegate:document.getElementById('task_delegate').value,
+    del:     document.getElementById('task_delete').value
+  };
+
+  localStorage.setItem("matrixState", JSON.stringify(data));
+  alert("Kaydedildi!");
 }
 
-// CSV indir
+/* CSV indir */
 function downloadCSV() {
-  const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-  let csvContent = "data:text/csv;charset=utf-8,";
-  csvContent += "Tarih,Soru,Cevap\n";
-  notes.forEach(item => {
-    csvContent += `${item.date},${item.question},${item.answer}\n`;
-  });
-  const encodedUri = encodeURI(csvContent);
-  const link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", "Gaffari_Reflections.csv");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  const data = JSON.parse(localStorage.getItem("matrixState") || "{}");
+  let csv = "Tarih,Soru,Not,Yap,Planla,Devret,Ele\n";
+  csv += `"${data.date || ''}","${data.question || ''}","${data.note || ''}","${data.do || ''}","${data.plan || ''}","${data.delegate || ''}","${data.del || ''}"`;
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "gaffari_eisenhower.csv";
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
-// Eisenhower Grid görev ekleme
-function addTask(type) {
-  const task = prompt(`Görevi girin (${type}):`);
-  if (!task) return;
-  const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-  tasks.push({task, type, date: new Date().toLocaleString()});
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-  alert(`${type} görev kaydedildi!`);
-}
-
-// Başlangıçta bir soru göster
 newQuestion();
 </script>
+
+</body>
+</html>
