@@ -1,110 +1,11 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gaffari’nin İçsel Rehberi</title>
-<style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#fefefe; color:#333;}
-  .container { max-width:800px; margin:30px auto; padding:20px;}
-  h1 { text-align:center; font-size:2em; margin-bottom:5px;}
-  h2 { text-align:center; font-weight:normal; margin-bottom:20px; color:#555;}
-  .question-box, .notes-box { margin-bottom:20px; }
-  textarea { width:100%; min-height:80px; padding:10px; font-size:1em; }
-  button { padding:8px 15px; margin-top:5px; margin-right:5px; cursor:pointer; }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px; }
-  .grid div { padding:15px; border-radius:8px; text-align:center; font-weight:bold; cursor:pointer; }
-  .urgent-important { background:#ffcccc; }
-  .not-urgent-important { background:#ffe0b3; }
-  .urgent-not-important { background:#cce5ff; }
-  .not-urgent-not-important { background:#e0e0e0; }
-  .bottom-msg { text-align:center; margin-top:40px; color:#777;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yağmur Atılgan</title>
 </head>
 <body>
-<div class="container">
-  <h1>Gaffari’nin İçsel Rehberi</h1>
-  <h2>Günlük düşünceler ve öncelikler</h2>
-
-  <!-- Felsefi Soru -->
-  <div class="question-box">
-    <p id="question">Yükleniyor...</p>
-    <button onclick="newQuestion()">Başka Soru</button>
-  </div>
-
-  <!-- Notlar -->
-  <div class="notes-box">
-    <textarea id="note" placeholder="Düşüncelerinizi buraya yazın..."></textarea>
-    <button onclick="saveNote()">Kaydet</button>
-    <button onclick="downloadCSV()">Excel Olarak İndir</button>
-  </div>
-
-  <!-- Eisenhower Grid -->
-  <h2>Eylem Pusulası (Eisenhower)</h2>
-  <div class="grid">
-    <div class="urgent-important" onclick="addTask('Önemli & Acil')">Önemli & Acil</div>
-    <div class="not-urgent-important" onclick="addTask('Önemli Ama Acil Değil')">Önemli Ama Acil Değil</div>
-    <div class="urgent-not-important" onclick="addTask('Acil Ama Önemli Değil')">Acil Ama Önemli Değil</div>
-    <div class="not-urgent-not-important" onclick="addTask('Önemli Değil & Acil Değil')">Önemli Değil & Acil Değil</div>
-  </div>
-</div>
-
-<div class="bottom-msg">
-  Made for you, Gaffari. Doğum günün kutlu olsun.
-</div>
-
-<script>
-// Felsefi sorular
-const questions = [
-  "Bugün hangisi seni gerçekten ileri taşır?",
-  "Hangi sorumluluktan kaçıyorsun ve neden?",
-  "Hayatında gerçekten önemli olan nedir?",
-  "Bugün kendin için küçük bir adım atabilir misin?",
-  "Hangi kararın seni uzun vadede mutlu edeceğini düşünüyorsun?"
-];
-
-function newQuestion() {
-  const q = questions[Math.floor(Math.random() * questions.length)];
-  document.getElementById('question').innerText = q;
-}
-
-// LocalStorage kaydetme
-function saveNote() {
-  const text = document.getElementById('note').value;
-  const date = new Date().toLocaleString();
-  const savedNotes = JSON.parse(localStorage.getItem('notes') || '[]');
-  savedNotes.push({date, question: document.getElementById('question').innerText, answer: text});
-  localStorage.setItem('notes', JSON.stringify(savedNotes));
-  alert('Not kaydedildi!');
-}
-
-// CSV indir
-function downloadCSV() {
-  const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-  let csvContent = "data:text/csv;charset=utf-8,";
-  csvContent += "Tarih,Soru,Cevap\n";
-  notes.forEach(item => {
-    csvContent += `${item.date},${item.question},${item.answer}\n`;
-  });
-  const encodedUri = encodeURI(csvContent);
-  const link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", "Gaffari_Reflections.csv");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
-// Eisenhower Grid görev ekleme
-function addTask(type) {
-  const task = prompt(`Görevi girin (${type}):`);
-  if (!task) return;
-  const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-  tasks.push({task, type, date: new Date().toLocaleString()});
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-  alert(`${type} görev kaydedildi!`);
-}
-
-// Başlangıçta bir soru göster
-newQuestion();
-</script>
+    <h1>Yağmur Atılgan</h1>
+</body>
+</html>
